@@ -57,9 +57,68 @@ class ad_vector_expr{
          return BinOp::apply(le()[index], re()[index]);
       }
 
-   private:
+   protected:
       LExpr _lhs;
       RExpr _rhs;
+};
+
+template <typename LExpr,typename BinOp>
+class ad_vector_expr<LExpr,BinOp,double&&>{
+   public:
+
+      ad_vector_expr(LExpr l, double r) : 
+         _lhs(std::forward<LExpr>(l)), 
+         _rhs(std::forward<double>(r)){}
+
+      //shut down default ctor...
+      ad_vector_expr() = delete;
+      //...and no copies...
+      ad_vector_expr(ad_vector_expr const&) = delete;
+      ad_vector_expr& operator =(ad_vector_expr const&) = delete;
+
+      // Moves are ok.
+      ad_vector_expr(ad_vector_expr&&) = default;
+      ad_vector_expr& operator =(ad_vector_expr&&) = default;
+
+      /*****************************************************************************************
+       *
+       *   Arithmetics
+       *
+       ****************************************************************************************/
+      template <typename RE>
+         auto operator +(RE&& rhs) const ->
+         ad_vector_expr<const ad_vector_expr<LExpr,BinOp,double>&, 
+         BinOp, decltype(std::forward<RE>(rhs))>{
+            return ad_vector_expr<const ad_vector_expr<LExpr,BinOp,double>&, BinOp,
+            decltype(std::forward<RE>(rhs))>(*this, std::forward<RE>(rhs));
+         }
+
+
+      auto le() -> 
+         typename std::add_lvalue_reference<LExpr>::type{ 
+            return _lhs; 
+         }
+
+      auto le() const ->
+         typename std::add_lvalue_reference<typename std::add_const<LExpr>::type>::type{ 
+            return _lhs;
+         }
+
+      auto re() -> typename std::add_lvalue_reference<double>::type {
+         return _rhs;
+      }
+
+      auto re() const -> typename std::add_lvalue_reference<typename std::add_const<double>::type>::type{ 
+         return _rhs;
+      }
+
+      auto operator [](std::size_t index) const -> decltype(BinOp::apply(this->le()[index], this->re())){
+         return BinOp::apply(le()[index], re());
+      }
+
+   protected:
+      LExpr _lhs;
+      double _rhs;
 };
 
 //===========================================================================
@@ -168,7 +227,6 @@ class ad_vector{
          return *this;
       }
 
-
       template <typename RightExpr>
       auto operator +(RightExpr&& rhs) const ->ad_vector_expr<const ad_vector&, 
                                                               plus_op<typename std::array<T,N>::value_type>,
@@ -185,8 +243,7 @@ class ad_vector{
 //===========================================================================
 
 template <class T, std::size_t N>
-inline void swap(ad_vector<T,N>& a, ad_vector<T,N>& b)
-{
+inline void swap(ad_vector<T,N>& a, ad_vector<T,N>& b){
    a.swap(b);
 }
 
@@ -194,8 +251,7 @@ inline void swap(ad_vector<T,N>& a, ad_vector<T,N>& b)
 
 
    template <class T, std::size_t N>
-std::ostream& operator <<(std::ostream& os, const ad_vector<T,N>& mv)
-{
+std::ostream& operator <<(std::ostream& os, const ad_vector<T,N>& mv){
    os << '(';
    for (std::size_t i = 0; i < N; ++i)
       os << mv[i] << ((i+1 != N) ? ',' : ')');
