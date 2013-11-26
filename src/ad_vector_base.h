@@ -1,7 +1,11 @@
 #ifndef __AD_VECTOR_BASE_H_
 #define __AD_VECTOR_BASE_H_
 
-template <class T, std::size_t N> class ad_vector;
+#include <array>
+#include <algorithm>
+#include <initializer_list>
+#include <type_traits>
+#include <iostream>
 
 #include "ad_vector_expr.h"
 #include "generic_op_structs.h"
@@ -20,22 +24,22 @@ class ad_vector{
        * CTORS
        ***********************************************************************/
       ad_vector(){
-         std::fill(begin(_val), end(_val), std::array<T,N>{});
+         std::fill(std::begin(_val), std::end(_val), (T)0.);
          std::cout << this << ": ad_vector()" << std::endl;
       }
 
       ad_vector(const ad_vector& in) noexcept{
-         std::copy(begin(in._val), end(in._val), begin(_val));
+         std::copy(std::begin(in._val), std::end(in._val), std::begin(_val));
          std::cout << this << ": ad_vector(copy: " << &in << ")" << std::endl;
       }
 
       ad_vector(ad_vector&& in) noexcept {
-         std::move(begin(in._val), end(in._val), begin(_val));
+         std::move(std::begin(in._val), std::end(in._val), std::begin(_val));
          std::cout << this << ": ad_vector(move: " << &in << ")" << std::endl;
       }
 
       ad_vector(std::initializer_list<typename std::array<T,N>::value_type> l) {
-         std::copy(begin(l), end(l), begin(_val));
+         std::copy(std::begin(l), std::end(l), std::begin(_val));
          std::cout << this << ": ad_vector(initlist)" << std::endl;
       }
 
@@ -50,13 +54,13 @@ class ad_vector{
        * ASSIGNS
        ***********************************************************************/
       ad_vector& operator =(const ad_vector& in) noexcept {
-         std::copy(begin(in._val), end(in._val), begin(_val));
+         std::copy(std::begin(in._val), std::end(in._val), std::begin(_val));
          std::cout << this << ": ad_vector op =(copy: " << &in << ")" << std::endl;
          return *this;
       }
 
       ad_vector& operator =(ad_vector&& in) noexcept {
-         std::move(begin(in._val), end(in._val), begin(_val));
+         std::move(std::begin(in._val), std::end(in._val), std::begin(_val));
          std::cout << this << ": ad_vector op =(move: " << &in << ")" << std::endl;
          return *this;
       }
