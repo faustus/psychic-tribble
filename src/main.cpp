@@ -22,8 +22,19 @@ int main()
       cout << '[' << &result << "]: " << result << "\n";
       result = result + 2.;
       cout<< result<<endl;
-      //result = 2 + result;
-      //cout << result<<endl;
+      result = 2. + result;
+      cout << result<<endl;
+
+      result = result - a;
+      cout << result<<endl;
+      result = a - b;
+      cout << result <<endl;
+
+      result = a*b;
+      cout <<result <<endl;
+
+      result = a/b;
+      cout<<result<<endl;
     }
   }
   catch (...)
