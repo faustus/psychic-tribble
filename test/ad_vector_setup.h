@@ -1,12 +1,29 @@
 #ifndef __AD_VECTOR_SETUP_H_
 #define __AD_VECTOR_SETUP_H_
 
+#include <type_traits>
+
 #include "gtest/gtest.h"
 #include "ad_vector_base.h"
 #include "ad_vector_test_base.h"
 //WARNING:
 // SOME OF THESE TESTS ASSUME ADDITION IS IMPLEMENTED CORRECTLY.
 // YOU HAVE BEEN WARNED OF THE OUROBOROS!!
+
+TEST(ADVectorType, NoParams){
+   bool val = std::is_same<double, ad_vector<>::value_type>::value;
+   ASSERT_TRUE(val);
+}
+
+TEST(ADVectorType, FloatParams){
+   bool val = std::is_same<float, ad_vector<float,1>::value_type>::value;
+   ASSERT_TRUE(val);
+}
+
+TEST(ADVectorType, DoubleParams){
+   bool val = std::is_same<double, ad_vector<double,1>::value_type>::value;
+   ASSERT_TRUE(val);
+}
 
 TEST(ADVectorCtor, Default){
    ad_vector<double,3> q;

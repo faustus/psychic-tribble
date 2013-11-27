@@ -1,4 +1,5 @@
 #include <iostream>
+#include <type_traits>
 
 #include "ad_vector_base.h"
 int main()
@@ -13,21 +14,8 @@ int main()
       ad_vector<double,3> d{4.0, 4.1, 4.2};
       ad_vector<double,3> result = a + b + c + d;
       std::cout << '[' << &result << "]: " << result << "\n";
-      result = result + 2.;
-      std::cout<< result<<std::endl;
-      result = 2. + result;
-      std::cout << result<<std::endl;
 
-      result = result - a;
-      std::cout << result<<std::endl;
-      result = a - b;
-      std::cout << result <<std::endl;
-
-      result = a*b;
-      std::cout <<result <<std::endl;
-
-      result = a/b;
-      std::cout<<result<<std::endl;
+      std::cout<<std::is_same<double, ad_vector<>::value_type>::value<<std::endl;
     }
   }
   catch (...)
