@@ -4,6 +4,7 @@
 #include "gtest/gtest.h"
 #include "ad_vector_base.h"
 #include "ad_vector_test_base.h"
+#include "ad_vector_sub_test_base.h"
 
 TEST_F(ADVectorSubTest, MinusClass){
    result = b - a;

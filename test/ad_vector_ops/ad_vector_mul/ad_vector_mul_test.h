@@ -4,34 +4,36 @@
 #include "gtest/gtest.h"
 #include "ad_vector_base.h"
 #include "ad_vector_test_base.h"
+#include "ad_vector_mul_test_base.h"
 
-TEST_F(ADVectorMulTest, PlusClass){
+TEST_F(ADVectorMulTest, MultiplyClass){
    result = a * b;
    for(std::size_t i=0; i<3; ++i)
       ASSERT_DOUBLE_EQ(result[i],mul_res[i]);
 }
 
-TEST_F(ADVectorMulTest, PlusEqualClass){
+TEST_F(ADVectorMulTest, MultiplyEqualClass){
    result = a;
    result *= b;
    for(std::size_t i=0; i<3; ++i)
       ASSERT_DOUBLE_EQ(result[i],mul_res[i]);
 }
 
-TEST_F(ADVectorMulTest, PlusEqualExprClass){
-   result*= a+b;
+TEST_F(ADVectorMulTest, MultiplyEqualExprClass){
+   result = ad_vector<double,3>({1.,1.,1.});
+   result*= a*b;
    for(std::size_t i=0; i<3; ++i)
       ASSERT_DOUBLE_EQ(result[i],mul_res[i]);
 }
 
-TEST_F(ADVectorMulTest, PlusLHSNonClass){
-   result = a * 2.;
+TEST_F(ADVectorMulTest, MultiplyLHSNonClass){
+   result = a * 3.;
    for(std::size_t i=0; i<3; ++i)
       ASSERT_DOUBLE_EQ(result[i],lit_mul_res[i]);
 }
 
-TEST_F(ADVectorMulTest, PlusRHSNonClass){
-   result = 2. * a;
+TEST_F(ADVectorMulTest, MultiplyRHSNonClass){
+   result = 3. * a;
    for(std::size_t i=0; i<3; ++i)
       ASSERT_DOUBLE_EQ(result[i],lit_mul_res[i]);
 }

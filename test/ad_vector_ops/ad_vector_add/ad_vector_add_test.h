@@ -4,6 +4,7 @@
 #include "gtest/gtest.h"
 #include "ad_vector_base.h"
 #include "ad_vector_test_base.h"
+#include "ad_vector_add_test_base.h"
 
 TEST_F(ADVectorAddTest, PlusClass){
    result = a + b;
