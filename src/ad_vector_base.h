@@ -25,29 +25,39 @@ class ad_vector{
        ***********************************************************************/
       ad_vector(){
          std::fill(std::begin(_val), std::end(_val), (T)0.);
+         #ifdef _VERBOSE
          std::cout << this << ": ad_vector()" << std::endl;
+         #endif
       }
 
       ad_vector(const ad_vector& in) noexcept{
          std::copy(std::begin(in._val), std::end(in._val), std::begin(_val));
+         #ifdef _VERBOSE
          std::cout << this << ": ad_vector(copy: " << &in << ")" << std::endl;
+         #endif
       }
 
       ad_vector(ad_vector&& in) noexcept {
          std::move(std::begin(in._val), std::end(in._val), std::begin(_val));
+         #ifdef _VERBOSE
          std::cout << this << ": ad_vector(move: " << &in << ")" << std::endl;
+         #endif
       }
 
       ad_vector(std::initializer_list<typename std::array<T,N>::value_type> l) {
          std::copy(std::begin(l), std::end(l), std::begin(_val));
+         #ifdef _VERBOSE
          std::cout << this << ": ad_vector(initlist)" << std::endl;
+         #endif
       }
 
       template <typename LE, typename Op, typename RE>
       ad_vector(ad_vector_expr<LE,Op,RE>&& expr) {
         for (std::size_t i = 0; i < N; ++i)
                _val[i] = expr[i];
+         #ifdef _VERBOSE
          std::cout << this << ": ad_vector(expr: " << &expr << ")" << std::endl;
+         #endif
       }
 
       /************************************************************************
@@ -55,13 +65,17 @@ class ad_vector{
        ***********************************************************************/
       ad_vector& operator =(const ad_vector& in) noexcept {
          std::copy(std::begin(in._val), std::end(in._val), std::begin(_val));
+         #ifdef _VERBOSE
          std::cout << this << ": ad_vector op =(copy: " << &in << ")" << std::endl;
+         #endif
          return *this;
       }
 
       ad_vector& operator =(ad_vector&& in) noexcept {
          std::move(std::begin(in._val), std::end(in._val), std::begin(_val));
+         #ifdef _VERBOSE
          std::cout << this << ": ad_vector op =(move: " << &in << ")" << std::endl;
+         #endif
          return *this;
       }
 
@@ -69,6 +83,9 @@ class ad_vector{
       ad_vector& operator =(RightExpr&& rhs) {
          for (std::size_t i = 0; i<N; ++i)
             _val[i] = rhs[i];
+         #ifdef _VERBOSE
+         std::cout << this << ": ad_vector op =(expr: " << &rhs << ")" << std::endl;
+         #endif
          return *this;
       }
 
@@ -76,7 +93,9 @@ class ad_vector{
        * DCTOR
        ***********************************************************************/
       ~ad_vector() {
+         #ifdef _VERBOSE
          std::cout << this << ": ~ad_vector()" << std::endl;
+         #endif
       }
 
       /////////////////////////////////////////////////////////////////////////

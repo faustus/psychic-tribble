@@ -1,5 +1,7 @@
 set(EXE test_suite)
 
+
+add_definitions(-D_VERBOSE)
 include_directories(../src/)
 include_directories(${GTEST_SRC_DIR})
 

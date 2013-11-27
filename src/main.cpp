@@ -1,9 +1,4 @@
-#include <array>
-#include <algorithm>
-#include <initializer_list>
-#include <type_traits>
 #include <iostream>
-
 
 #include "ad_vector_base.h"
 int main()
