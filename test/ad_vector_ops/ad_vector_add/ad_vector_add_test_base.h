@@ -9,9 +9,11 @@ class ADVectorAddTest : public ADVectorTest{
    protected:
       ADVectorAddTest(){
          add_res = ad_vector<double,3>({3.0, 3.2, 3.4});
+         add_res_0 = ad_vector<double,3>({4.0, 4.3, 4.6});
          lit_add_res = ad_vector<double,3>({3.0, 3.1, 3.2});
       }
       ad_vector<double, 3> add_res;
+      ad_vector<double, 3> add_res_0;
       ad_vector<double, 3> lit_add_res;
 };
 
