@@ -117,6 +117,9 @@ class ad_vector{
             return _val[index];
       }
 
+      const std::array<T,N>& val() const{
+         return _val;
+      }
       /////////////////////////////////////////////////////////////////////////
       /************************************************************************
        * ARITHMETIC
@@ -327,7 +330,7 @@ inline void swap(ad_vector<T,N>& a, ad_vector<T,N>& b){
 //===========================================================================
 
 
-   template <class T, std::size_t N>
+template <class T, std::size_t N>
 std::ostream& operator <<(std::ostream& os, const ad_vector<T,N>& mv){
    os << '(';
    for (std::size_t i = 0; i < N; ++i)

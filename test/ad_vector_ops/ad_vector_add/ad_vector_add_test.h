@@ -12,6 +12,18 @@ TEST_F(ADVectorAddTest, PlusClass){
       ASSERT_DOUBLE_EQ(result[i],add_res[i]);
 }
 
+TEST_F(ADVectorAddTest, MultiPlusClass){
+   result = a + b + a;
+   for(std::size_t i=0; i<3; ++i)
+      ASSERT_DOUBLE_EQ(result[i],add_res_0[i]);
+}
+
+TEST_F(ADVectorAddTest, MultiPlusParenClass){
+   result = a + (b + a);
+   for(std::size_t i=0; i<3; ++i)
+      ASSERT_DOUBLE_EQ(result[i],add_res_0[i]);
+}
+
 TEST_F(ADVectorAddTest, PlusEqualClass){
    result = a;
    result += b;

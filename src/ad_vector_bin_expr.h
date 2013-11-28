@@ -68,17 +68,6 @@ class ad_vector_bin_expr{
          decltype(std::forward<RE>(rhs))>(*this, std::forward<RE>(rhs));
       }
 
-      template <typename RE>
-      auto operator =(RE&& rhs) const ->
-      ad_vector_bin_expr<const ad_vector_bin_expr<LExpr,BinOp,RExpr>&, 
-      BinOp, decltype(std::forward<RE>(rhs))>{
-         #ifdef _VERBOSE
-         std::cout<< this << " : ad_vector_bin_expr="<<std::endl;
-         #endif
-         return ad_vector_bin_expr<const ad_vector_bin_expr<LExpr,BinOp,RExpr>&, BinOp,
-         decltype(std::forward<RE>(rhs))>(*this, std::forward<RE>(rhs));
-      }
-
       auto le() -> 
       typename std::add_lvalue_reference<LExpr>::type{ 
          return _lhs; 
@@ -133,10 +122,45 @@ class ad_vector_bin_expr<double&&, BinOp,RExpr>{
       auto operator +(RE&& rhs) const ->
       ad_vector_bin_expr<const ad_vector_bin_expr<double,BinOp,RExpr>&, 
       BinOp, decltype(std::forward<RE>(rhs))>{
+         #ifdef _VERBOSE
+         std::cout<< this << " : ad_vector_bin_expr+"<<std::endl;
+         #endif
          return ad_vector_bin_expr<const ad_vector_bin_expr<double,BinOp,RExpr>&, BinOp,
          decltype(std::forward<RE>(rhs))>(*this, std::forward<RE>(rhs));
       }
 
+      template <typename RE>
+      auto operator -(RE&& rhs) const ->
+      ad_vector_bin_expr<const ad_vector_bin_expr<double,BinOp,RExpr>&, 
+      BinOp, decltype(std::forward<RE>(rhs))>{
+         #ifdef _VERBOSE
+         std::cout<< this << " : ad_vector_bin_expr-"<<std::endl;
+         #endif
+         return ad_vector_bin_expr<const ad_vector_bin_expr<double,BinOp,RExpr>&, BinOp,
+         decltype(std::forward<RE>(rhs))>(*this, std::forward<RE>(rhs));
+      }
+
+      template <typename RE>
+      auto operator *(RE&& rhs) const ->
+      ad_vector_bin_expr<const ad_vector_bin_expr<double,BinOp,RExpr>&, 
+      BinOp, decltype(std::forward<RE>(rhs))>{
+         #ifdef _VERBOSE
+         std::cout<< this << " : ad_vector_bin_expr*"<<std::endl;
+         #endif
+         return ad_vector_bin_expr<const ad_vector_bin_expr<double,BinOp,RExpr>&, BinOp,
+         decltype(std::forward<RE>(rhs))>(*this, std::forward<RE>(rhs));
+      }
+
+      template <typename RE>
+      auto operator /(RE&& rhs) const ->
+      ad_vector_bin_expr<const ad_vector_bin_expr<double,BinOp,RExpr>&, 
+      BinOp, decltype(std::forward<RE>(rhs))>{
+         #ifdef _VERBOSE
+         std::cout<< this << " : ad_vector_bin_expr/"<<std::endl;
+         #endif
+         return ad_vector_bin_expr<const ad_vector_bin_expr<double,BinOp,RExpr>&, BinOp,
+         decltype(std::forward<RE>(rhs))>(*this, std::forward<RE>(rhs));
+      }
 
       auto le() -> 
       typename std::add_lvalue_reference<double>::type{ 
@@ -192,6 +216,42 @@ class ad_vector_bin_expr<LExpr,BinOp,double&&>{
       auto operator +(RE&& rhs) const ->
       ad_vector_bin_expr<const ad_vector_bin_expr<LExpr,BinOp,double>&, 
       BinOp, decltype(std::forward<RE>(rhs))>{
+         #ifdef _VERBOSE
+         std::cout<< this << " : ad_vector_bin_expr+"<<std::endl;
+         #endif
+         return ad_vector_bin_expr<const ad_vector_bin_expr<LExpr,BinOp,double>&, BinOp,
+         decltype(std::forward<RE>(rhs))>(*this, std::forward<RE>(rhs));
+      }
+
+      template <typename RE>
+      auto operator -(RE&& rhs) const ->
+      ad_vector_bin_expr<const ad_vector_bin_expr<LExpr,BinOp,double>&, 
+      BinOp, decltype(std::forward<RE>(rhs))>{
+         #ifdef _VERBOSE
+         std::cout<< this << " : ad_vector_bin_expr-"<<std::endl;
+         #endif
+         return ad_vector_bin_expr<const ad_vector_bin_expr<LExpr,BinOp,double>&, BinOp,
+         decltype(std::forward<RE>(rhs))>(*this, std::forward<RE>(rhs));
+      }
+
+      template <typename RE>
+      auto operator *(RE&& rhs) const ->
+      ad_vector_bin_expr<const ad_vector_bin_expr<LExpr,BinOp,double>&, 
+      BinOp, decltype(std::forward<RE>(rhs))>{
+         #ifdef _VERBOSE
+         std::cout<< this << " : ad_vector_bin_expr*"<<std::endl;
+         #endif
+         return ad_vector_bin_expr<const ad_vector_bin_expr<LExpr,BinOp,double>&, BinOp,
+         decltype(std::forward<RE>(rhs))>(*this, std::forward<RE>(rhs));
+      }
+
+      template <typename RE>
+      auto operator /(RE&& rhs) const ->
+      ad_vector_bin_expr<const ad_vector_bin_expr<LExpr,BinOp,double>&, 
+      BinOp, decltype(std::forward<RE>(rhs))>{
+         #ifdef _VERBOSE
+         std::cout<< this << " : ad_vector_bin_expr/"<<std::endl;
+         #endif
          return ad_vector_bin_expr<const ad_vector_bin_expr<LExpr,BinOp,double>&, BinOp,
          decltype(std::forward<RE>(rhs))>(*this, std::forward<RE>(rhs));
       }
