@@ -7,7 +7,7 @@
 #include <type_traits>
 #include <iostream>
 
-#include "ad_vector_expr.h"
+#include "ad_vector_bin_expr.h"
 #include "generic_op_structs.h"
 
 template <class T=double, std::size_t N=1>
@@ -52,7 +52,7 @@ class ad_vector{
       }
 
       template <typename LE, typename Op, typename RE>
-      ad_vector(ad_vector_expr<LE,Op,RE>&& expr) {
+      ad_vector(ad_vector_bin_expr<LE,Op,RE>&& expr) {
         for (std::size_t i = 0; i < N; ++i)
                _val[i] = expr[i];
          #ifdef _VERBOSE
@@ -140,10 +140,10 @@ class ad_vector{
       }
 
       template <typename RightExpr>
-      auto operator +(RightExpr&& rhs) const ->ad_vector_expr<const ad_vector&, 
+      auto operator +(RightExpr&& rhs) const ->ad_vector_bin_expr<const ad_vector&, 
                                                               add_op<typename std::array<T,N>::value_type>,
                                                               decltype(std::forward<RightExpr>(rhs))> {
-         return ad_vector_expr<const ad_vector&, 
+         return ad_vector_bin_expr<const ad_vector&, 
                                add_op<typename std::array<T,N>::value_type>, 
                                decltype(std::forward<RightExpr>(rhs))>(*this, std::forward<RightExpr>(rhs));
       }
@@ -165,10 +165,10 @@ class ad_vector{
       }
 
       template <typename RightExpr>
-      auto operator -(RightExpr&& rhs) const ->ad_vector_expr<const ad_vector&, 
+      auto operator -(RightExpr&& rhs) const ->ad_vector_bin_expr<const ad_vector&, 
                                                               sub_op<typename std::array<T,N>::value_type>,
                                                               decltype(std::forward<RightExpr>(rhs))> {
-         return ad_vector_expr<const ad_vector&, 
+         return ad_vector_bin_expr<const ad_vector&, 
                                sub_op<typename std::array<T,N>::value_type>, 
                                decltype(std::forward<RightExpr>(rhs))>(*this, std::forward<RightExpr>(rhs));
       }
@@ -190,10 +190,10 @@ class ad_vector{
       }
 
       template <typename RightExpr>
-      auto operator *(RightExpr&& rhs) const ->ad_vector_expr<const ad_vector&, 
+      auto operator *(RightExpr&& rhs) const ->ad_vector_bin_expr<const ad_vector&, 
                                                               mul_op<typename std::array<T,N>::value_type>,
                                                               decltype(std::forward<RightExpr>(rhs))> {
-         return ad_vector_expr<const ad_vector&, 
+         return ad_vector_bin_expr<const ad_vector&, 
                                mul_op<typename std::array<T,N>::value_type>, 
                                decltype(std::forward<RightExpr>(rhs))>(*this, std::forward<RightExpr>(rhs));
       }
@@ -215,10 +215,10 @@ class ad_vector{
       }
 
       template <typename RightExpr>
-      auto operator /(RightExpr&& rhs) const ->ad_vector_expr<const ad_vector&, 
+      auto operator /(RightExpr&& rhs) const ->ad_vector_bin_expr<const ad_vector&, 
                                                               div_op<typename std::array<T,N>::value_type>,
                                                               decltype(std::forward<RightExpr>(rhs))> {
-         return ad_vector_expr<const ad_vector&, 
+         return ad_vector_bin_expr<const ad_vector&, 
                                div_op<typename std::array<T,N>::value_type>, 
                                decltype(std::forward<RightExpr>(rhs))>(*this, std::forward<RightExpr>(rhs));
       }
@@ -237,19 +237,19 @@ class ad_vector{
  * ADDITION
  ***********************************************************************/
 template <typename T, std::size_t N>
-auto operator+(T&& lhs, ad_vector<T,N>&& rhs) ->ad_vector_expr<decltype(std::forward<T>(lhs)),
+auto operator+(T&& lhs, ad_vector<T,N>&& rhs) ->ad_vector_bin_expr<decltype(std::forward<T>(lhs)),
                                                       add_op<typename std::array<T,N>::value_type>,
                                                       ad_vector<T,N>&&> {
-return ad_vector_expr<decltype(std::forward<T>(lhs)),
+return ad_vector_bin_expr<decltype(std::forward<T>(lhs)),
                       add_op<typename std::array<T,N>::value_type>,
                       ad_vector<T,N>&&>(std::forward<T>(lhs), rhs);
 }
 
 template <typename T, std::size_t N>
-auto operator+(T&& lhs, const ad_vector<T,N>& rhs) ->ad_vector_expr<decltype(std::forward<T>(lhs)),
+auto operator+(T&& lhs, const ad_vector<T,N>& rhs) ->ad_vector_bin_expr<decltype(std::forward<T>(lhs)),
                                                       add_op<typename std::array<T,N>::value_type>,
                                                       const ad_vector<T,N>&> {
-return ad_vector_expr<decltype(std::forward<T>(lhs)),
+return ad_vector_bin_expr<decltype(std::forward<T>(lhs)),
                       add_op<typename std::array<T,N>::value_type>,
                       const ad_vector<T,N>&>(std::forward<T>(lhs), rhs);
 }
@@ -258,19 +258,19 @@ return ad_vector_expr<decltype(std::forward<T>(lhs)),
  * SUBTRACTION
  ***********************************************************************/
 template <typename T, std::size_t N>
-auto operator-(T&& lhs, ad_vector<T,N>&& rhs) ->ad_vector_expr<decltype(std::forward<T>(lhs)),
+auto operator-(T&& lhs, ad_vector<T,N>&& rhs) ->ad_vector_bin_expr<decltype(std::forward<T>(lhs)),
                                                       sub_op<typename std::array<T,N>::value_type>,
                                                       ad_vector<T,N>&&> {
-return ad_vector_expr<decltype(std::forward<T>(lhs)),
+return ad_vector_bin_expr<decltype(std::forward<T>(lhs)),
                       sub_op<typename std::array<T,N>::value_type>,
                       ad_vector<T,N>&&>(std::forward<T>(lhs), rhs);
 }
 
 template <typename T, std::size_t N>
-auto operator-(T&& lhs, const ad_vector<T,N>& rhs) ->ad_vector_expr<decltype(std::forward<T>(lhs)),
+auto operator-(T&& lhs, const ad_vector<T,N>& rhs) ->ad_vector_bin_expr<decltype(std::forward<T>(lhs)),
                                                       sub_op<typename std::array<T,N>::value_type>,
                                                       const ad_vector<T,N>&> {
-return ad_vector_expr<decltype(std::forward<T>(lhs)),
+return ad_vector_bin_expr<decltype(std::forward<T>(lhs)),
                       sub_op<typename std::array<T,N>::value_type>,
                       const ad_vector<T,N>&>(std::forward<T>(lhs), rhs);
 }
@@ -279,19 +279,19 @@ return ad_vector_expr<decltype(std::forward<T>(lhs)),
  * MULTIPLICATION 
  ***********************************************************************/
 template <typename T, std::size_t N>
-auto operator*(T&& lhs, ad_vector<T,N>&& rhs) ->ad_vector_expr<decltype(std::forward<T>(lhs)),
+auto operator*(T&& lhs, ad_vector<T,N>&& rhs) ->ad_vector_bin_expr<decltype(std::forward<T>(lhs)),
                                                       mul_op<typename std::array<T,N>::value_type>,
                                                       ad_vector<T,N>&&> {
-return ad_vector_expr<decltype(std::forward<T>(lhs)),
+return ad_vector_bin_expr<decltype(std::forward<T>(lhs)),
                       mul_op<typename std::array<T,N>::value_type>,
                       ad_vector<T,N>&&>(std::forward<T>(lhs), rhs);
 }
 
 template <typename T, std::size_t N>
-auto operator*(T&& lhs, const ad_vector<T,N>& rhs) ->ad_vector_expr<decltype(std::forward<T>(lhs)),
+auto operator*(T&& lhs, const ad_vector<T,N>& rhs) ->ad_vector_bin_expr<decltype(std::forward<T>(lhs)),
                                                       mul_op<typename std::array<T,N>::value_type>,
                                                       const ad_vector<T,N>&> {
-return ad_vector_expr<decltype(std::forward<T>(lhs)),
+return ad_vector_bin_expr<decltype(std::forward<T>(lhs)),
                       mul_op<typename std::array<T,N>::value_type>,
                       const ad_vector<T,N>&>(std::forward<T>(lhs), rhs);
 }
@@ -300,21 +300,21 @@ return ad_vector_expr<decltype(std::forward<T>(lhs)),
  * DIVISION
  ***********************************************************************/
 template <typename T, std::size_t N>
-auto operator/(T&& lhs, ad_vector<T,N>&& rhs) ->ad_vector_expr<decltype(std::forward<T>(lhs)),
+auto operator/(T&& lhs, ad_vector<T,N>&& rhs) ->ad_vector_bin_expr<decltype(std::forward<T>(lhs)),
                                                       div_op<typename std::array<T,N>::value_type>,
                                                       ad_vector<T,N>&&> {
-return ad_vector_expr<decltype(std::forward<T>(lhs)),
+return ad_vector_bin_expr<decltype(std::forward<T>(lhs)),
                       div_op<typename std::array<T,N>::value_type>,
                       ad_vector<T,N>&&>(std::forward<T>(lhs), rhs);
 }
 
 template <typename T, std::size_t N>
-auto operator/(T&& lhs, const ad_vector<T,N>& rhs) ->ad_vector_expr<decltype(std::forward<T>(lhs)),
+auto operator/(T&& lhs, const ad_vector<T,N>& rhs) ->ad_vector_bin_expr<decltype(std::forward<T>(lhs)),
                                                       div_op<typename std::array<T,N>::value_type>,
                                                       const ad_vector<T,N>&> {
-return ad_vector_expr<decltype(std::forward<T>(lhs)),
+return ad_vector_bin_expr<decltype(std::forward<T>(lhs)),
                       div_op<typename std::array<T,N>::value_type>,
-                      const ad_vector<T,N>&>(std::forward<T>(lhs), rhs);
+                     const ad_vector<T,N>&>(std::forward<T>(lhs), rhs);
 }
 
 //===========================================================================
