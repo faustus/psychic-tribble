@@ -1,0 +1,11 @@
+*.cmake
+*.a
+*.o
+bin/
+gtest-1.7.0/*
+Testing/
+*Makefile
+*CMakeCache.txt
+*CMakeFiles
+*.swp
+install_manifest.txt
