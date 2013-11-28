@@ -5,7 +5,9 @@ enable_testing()
 set(CMAKE_CXX_FLAGS "-O3 -std=c++11")
 set(CMAKE_INSTALL_PREFIX /home/wes/Desktop/surreal_grammar/)
 
-
+if(_VERBOSE)
+   add_definitions(-D_VERBOSE)
+endif(_VERBOSE)
 add_subdirectory(src/)
 
 #TODO add option for turning off tests

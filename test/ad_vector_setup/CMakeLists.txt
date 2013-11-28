@@ -1,7 +1,6 @@
 set(EXE setup)
 
 
-#add_definitions(-D_VERBOSE)
 include_directories(../)
 include_directories(../../src/)
 include_directories(${GTEST_SRC_DIR})
