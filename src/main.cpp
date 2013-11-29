@@ -12,10 +12,11 @@ int main()
       ad_vector<double,3> b{2.0, 2.1, 2.2};
       ad_vector<double,3> c{3.0, 3.1, 3.2};
       ad_vector<double,3> d{4.0, 4.1, 4.2};
-      ad_vector<double,3> result = a + b + c + d;
-      std::cout << '[' << &result << "]: " << result << "\n";
+      ad_vector<double,3> result;
 
-      std::cout<<std::is_same<double, ad_vector<>::value_type>::value<<std::endl;
+      result = pow(a+b,2.);
+      std::cout<< result <<std::endl;
+      std::cout<< a <<std::endl;
     }
   }
   catch (...)
